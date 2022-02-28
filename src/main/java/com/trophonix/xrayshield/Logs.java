@@ -1,5 +1,7 @@
 package com.trophonix.xrayshield;
 
+import org.bukkit.Bukkit;
+
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -10,13 +12,15 @@ public class Logs {
 
   private File parentFile;
   private SimpleDateFormat fileNameFormat;
+private final XRayShield plugin;
 
   private String currentFileName;
   private List<String> messages = new ArrayList<>();
 
-  public Logs(File parentFile, String fileNameFormat) {
+  public Logs(File parentFile, String fileNameFormat, XRayShield plugin) {
     this.parentFile = parentFile;
     this.fileNameFormat = new SimpleDateFormat(fileNameFormat);
+    this.plugin = plugin;
   }
 
   public void push(String message) {
@@ -27,8 +31,16 @@ public class Logs {
   public void save() {
     if (!messages.isEmpty()) {
       try {
+        File logfolder = new File(plugin.getDataFolder() + "/logs");
+        System.out.println(logfolder.getAbsolutePath());
+        if (!logfolder.exists()){
+          logfolder.mkdirs();
+        }
+
+
         File file = new File(parentFile, currentFileName);
         FileWriter fileWriter = new FileWriter(file, true);
+
         if (!file.exists()) {
           file.getParentFile().mkdirs();
           file.createNewFile();

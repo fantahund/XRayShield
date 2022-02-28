@@ -68,8 +68,7 @@ public class XRayShield extends JavaPlugin {
       saveConfig();
     }
     if (getConfig().getBoolean("logs.enabled", false)) {
-      logs = new Logs(new File(getDataFolder(), "logs"),
-              getConfig().getString("logs.fileNameFormat", "dd'-'MM'-'yyyy'.log'"));
+      logs = new Logs(new File(getDataFolder(), "logs"), getConfig().getString("logs.fileNameFormat", "dd'-'MM'-'yyyy'.log'"), this);
       long saveDelay = parseTime(getConfig().getString("logs.saveDelay", "5m"));
       if (saveDelay > 0) Bukkit.getScheduler().runTaskTimer(this, logs::save, saveDelay * 20L, saveDelay * 20L);
     }
@@ -158,17 +157,13 @@ public class XRayShield extends JavaPlugin {
     }
   }
 
-  private static String locationToString(Location location) {
-    return "x" + location.getBlockX() + " y" + location.getBlockY() + " z" + location.getBlockZ();
-  }
-
   private static String replacePlaceholders(String string, Player player, Material blockType, int amount, String time, Location location) {
     return ChatColor.translateAlternateColorCodes('&', string)
             .replace("%player%", player.getName())
             .replace("%ore%", blockType.name().toLowerCase().replace("_", " "))
             .replace("%amount%", Integer.toString(amount))
             .replace("%time%", time)
-            .replace("%location%", locationToString(location));
+            .replace("%location%", "World: " + location.getWorld() + " Location: " + location.getBlockX() + " " + location.getBlockY() + " " + location.getBlockZ());
   }
 
 }
