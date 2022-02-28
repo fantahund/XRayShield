@@ -163,7 +163,7 @@ public class XRayShield extends JavaPlugin {
             .replace("%ore%", blockType.name().toLowerCase().replace("_", " "))
             .replace("%amount%", Integer.toString(amount))
             .replace("%time%", time)
-            .replace("%location%", "World: " + location.getWorld() + " Location: " + location.getBlockX() + " " + location.getBlockY() + " " + location.getBlockZ());
+            .replace("%location%", "World: " + location.getWorld().getName() + " Location: " + location.getBlockX() + " " + location.getBlockY() + " " + location.getBlockZ());
   }
 
 }

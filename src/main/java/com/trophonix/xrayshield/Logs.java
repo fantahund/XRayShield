@@ -32,7 +32,6 @@ private final XRayShield plugin;
     if (!messages.isEmpty()) {
       try {
         File logfolder = new File(plugin.getDataFolder() + "/logs");
-        System.out.println(logfolder.getAbsolutePath());
         if (!logfolder.exists()){
           logfolder.mkdirs();
         }
